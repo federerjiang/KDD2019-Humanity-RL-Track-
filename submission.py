@@ -12,6 +12,9 @@ from scipy.optimize import minimize
 
 
 class OnlineLogisticRegression:
+	""" The implementation of online LR for TS is inspired by the link below.
+	https://github.com/gdmarmerola/interactive-intro-rl/blob/master/notebooks/ts_for_contextual_bandit.ipynb
+	"""
 	def __init__(self, lambda_, alpha, n_dim):
 		self.lambda_ = lambda_
 		self.alpha = alpha
@@ -40,11 +43,9 @@ class OnlineLogisticRegression:
 	def predict_proba(self, X, mode='sample'):
 		self.w = self.get_weights()
 		if mode == 'sample':
-			w = self.w # weights are samples of posteriors
+			w = self.w 
 		elif mode == 'expected':
-			w = self.m # weights are expected values of posteriors
-		else:
-			raise Exception('mode not recognized!')
+			w = self.m 
 		proba = 1 / (1 + np.exp(-1 * X.dot(w)))
 		return proba
 
